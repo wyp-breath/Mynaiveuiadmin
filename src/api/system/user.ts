@@ -16,10 +16,15 @@ export interface BasicPageParams {
  * @description: 获取用户信息
  */
 export function getUserInfo() {
-  return http.request({
-    url: '/admin_info',
-    method: 'get',
-  });
+  return http.request(
+    {
+      url: '/system/user/info/',
+      method: 'get',
+    },
+    {
+      isTransformResponse: true,
+    }
+  );
 }
 
 /**
@@ -28,7 +33,7 @@ export function getUserInfo() {
 export function login(params) {
   return http.request<BasicResponseModel>(
     {
-      url: '/login',
+      url: '/token/',
       method: 'POST',
       params,
     },

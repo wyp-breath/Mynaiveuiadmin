@@ -189,7 +189,7 @@ const transform: AxiosTransform = {
     const token = userStore.getToken;
     if (token) {
       // jwt token
-      config.headers.token = token;
+      config.headers.Authorization = 'Bearer ' + token;
     }
     return config;
   },
@@ -234,7 +234,7 @@ const transform: AxiosTransform = {
 };
 
 const Axios = new VAxios({
-  timeout: 10 * 1000,
+  timeout: 5 * 1000,
   // 接口前缀
   prefixUrl: urlPrefix,
   headers: { 'Content-Type': ContentTypeEnum.JSON },

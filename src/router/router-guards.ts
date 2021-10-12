@@ -18,6 +18,7 @@ export function createRouterGuards(router: Router) {
     const Loading = window['$loading'] || null;
     Loading && Loading.start();
     if (from.path === LOGIN_PATH && to.name === 'errorPage') {
+      console.log(from);
       next(PageEnum.BASE_HOME);
       return;
     }
@@ -36,7 +37,7 @@ export function createRouterGuards(router: Router) {
         next();
         return;
       }
-      // redirect login page
+      // redirect login page 重定向到登录页面
       const redirectData: { path: string; replace: boolean; query?: Recordable<string> } = {
         path: LOGIN_PATH,
         replace: true,
@@ -80,6 +81,7 @@ export function createRouterGuards(router: Router) {
   });
 
   router.afterEach((to, _, failure) => {
+    console.log(to);
     document.title = (to?.meta?.title as string) || document.title;
     if (isNavigationFailure(failure)) {
       //console.log('failed navigation', failure)

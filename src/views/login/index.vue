@@ -29,7 +29,7 @@
             <n-input
               v-model:value="formInline.password"
               type="password"
-              show-password-toggle
+              showPasswordOn="click"
               placeholder="请输入密码"
             >
               <template #prefix>
@@ -95,8 +95,8 @@
   import { useUserStore } from '@/store/modules/user';
   import { useMessage } from 'naive-ui';
   import { ResultEnum } from '@/enums/httpEnum';
-  import logo from '@/assets/images/logo.png';
-  import { PersonOutline, LockClosedOutline, LogoGithub, LogoFacebook } from '@vicons/ionicons5';
+  // import logo from '@/assets/images/logo.png';
+  // import { PersonOutline, LockClosedOutline, LogoGithub, LogoFacebook } from '@vicons/ionicons5';
 
   interface FormState {
     username: string;
@@ -165,7 +165,7 @@
 
   const onAuthCode = () => {
     formInline.isCaptcha = true;
-  }
+  };
 </script>
 
 <style lang="less" scoped>

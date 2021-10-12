@@ -13,7 +13,7 @@ export interface IUserState {
   username: string;
   welcome: string;
   avatar: string;
-  permissions: any[];
+  perms: any[];
   info: any;
 }
 
@@ -24,7 +24,7 @@ export const useUserStore = defineStore({
     username: '',
     welcome: '',
     avatar: '',
-    permissions: [],
+    perms: [],
     info: Storage.get(CURRENT_USER, {}),
   }),
   getters: {
@@ -38,7 +38,7 @@ export const useUserStore = defineStore({
       return this.username;
     },
     getPermissions(): [any][] {
-      return this.permissions;
+      return this.perms;
     },
     getUserInfo(): object {
       return this.info;
@@ -52,7 +52,7 @@ export const useUserStore = defineStore({
       this.avatar = avatar;
     },
     setPermissions(permissions) {
-      this.permissions = permissions;
+      this.perms = permissions;
     },
     setUserInfo(info) {
       this.info = info;
@@ -64,11 +64,9 @@ export const useUserStore = defineStore({
         const { result, code } = response;
         if (code === ResultEnum.SUCCESS) {
           const ex = 7 * 24 * 60 * 60 * 1000;
-          storage.set(ACCESS_TOKEN, result.token, ex);
-          storage.set(CURRENT_USER, result, ex);
+          storage.set(ACCESS_TOKEN, result.access, ex);
           storage.set(IS_LOCKSCREEN, false);
-          this.setToken(result.token);
-          this.setUserInfo(result);
+          this.setToken(result.access);
         }
         return Promise.resolve(response);
       } catch (e) {
@@ -83,9 +81,11 @@ export const useUserStore = defineStore({
         getUserInfo()
           .then((res) => {
             const result = res;
-            if (result.permissions && result.permissions.length) {
-              const permissionsList = result.permissions;
+            const ex = 7 * 24 * 60 * 60 * 1000;
+            if (result.perms && result.perms.length) {
+              const permissionsList = result.perms;
               that.setPermissions(permissionsList);
+              storage.set(CURRENT_USER, result, ex);
               that.setUserInfo(result);
             } else {
               reject(new Error('getInfo: permissionsList must be a non-null array !'));

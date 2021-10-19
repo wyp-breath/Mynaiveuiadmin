@@ -10,22 +10,32 @@ import { storage } from '@/utils/Storage';
 
 export interface IUserState {
   token: string;
-  username: string;
-  welcome: string;
+  info: Object;
   avatar: string;
+  cp_mode: number;
+  dept: string;
+  dept_id: number;
+  id: number;
+  parent_depts: any[];
+  parent_depts_ids: any[];
   perms: any[];
-  info: any;
+  roles: any[];
 }
 
 export const useUserStore = defineStore({
   id: 'app-user',
   state: (): IUserState => ({
     token: Storage.get(ACCESS_TOKEN, ''),
-    username: '',
-    welcome: '',
-    avatar: '',
     perms: [],
-    info: Storage.get(CURRENT_USER, {}),
+    info: { name: '', username: '', phone: '' },
+    cp_mode: 0,
+    dept: '',
+    dept_id: 0,
+    id: 0,
+    parent_depts: [],
+    parent_depts_ids: [],
+    avatar: '',
+    roles: [],
   }),
   getters: {
     getToken(): string {
@@ -34,11 +44,29 @@ export const useUserStore = defineStore({
     getAvatar(): string {
       return this.avatar;
     },
-    getNickname(): string {
-      return this.username;
-    },
-    getPermissions(): [any][] {
+    getPermissions(): any[] {
       return this.perms;
+    },
+    getCpmode(): number {
+      return this.cp_mode;
+    },
+    getDept(): string {
+      return this.dept;
+    },
+    getDeptid(): number {
+      return this.dept_id;
+    },
+    getId(): number {
+      return this.id;
+    },
+    getParentDept(): any[] {
+      return this.parent_depts;
+    },
+    getParentDeptid(): any[] {
+      return this.parent_depts_ids;
+    },
+    getRoles(): any[] {
+      return this.roles;
     },
     getUserInfo(): object {
       return this.info;
@@ -51,8 +79,29 @@ export const useUserStore = defineStore({
     setAvatar(avatar: string) {
       this.avatar = avatar;
     },
-    setPermissions(permissions) {
-      this.perms = permissions;
+    setPermissions(perms) {
+      this.perms = perms;
+    },
+    setCpmode(cp_mode) {
+      this.cp_mode = cp_mode;
+    },
+    setDept(dept) {
+      this.dept = dept;
+    },
+    setDeptid(dept_id) {
+      this.dept_id = dept_id;
+    },
+    setId(id) {
+      this.id = id;
+    },
+    setParentDept(parent_depts) {
+      this.parent_depts = parent_depts;
+    },
+    setParentDeptid(parent_depts_ids) {
+      this.parent_depts_ids = parent_depts_ids;
+    },
+    setRoles(roles) {
+      this.roles = roles;
     },
     setUserInfo(info) {
       this.info = info;
@@ -86,11 +135,23 @@ export const useUserStore = defineStore({
               const permissionsList = result.perms;
               that.setPermissions(permissionsList);
               storage.set(CURRENT_USER, result, ex);
-              that.setUserInfo(result);
+              that.setUserInfo({
+                username: result.username,
+                name: result.name,
+                phone: result.phone,
+              });
+              that.setAvatar(result.avatar);
+              that.setPermissions(result.perms);
+              that.setCpmode(result.cp_mode);
+              that.setDept(result.dept);
+              that.setDeptid(result.dept_id);
+              that.setId(result.id);
+              that.setParentDept(result.parent_depts);
+              that.setParentDeptid(result.parent_depts_ids);
+              that.setRoles(result.roles);
             } else {
               reject(new Error('getInfo: permissionsList must be a non-null array !'));
             }
-            that.setAvatar(result.avatar);
             resolve(res);
           })
           .catch((error) => {

@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { createStorage } from '@/utils/Storage';
 import { store } from '@/store';
+import { isArray } from '@/utils/is';
 import { ACCESS_TOKEN, CURRENT_USER, IS_LOCKSCREEN } from '@/store/mutation-types';
 import { ResultEnum } from '@/enums/httpEnum';
 
@@ -183,11 +184,23 @@ function changeKeys(Arrydata: any) {
   };
   for (var i = 0; i < Arrydata.length; i++) {
     var obj = Arrydata[i];
-    for (var key in obj) {
-      var newKey = keyMap[key];
-      if (newKey) {
-        obj[newKey] = obj[key];
-        delete obj[key];
+    if (obj === 'admin') {
+      Arrydata[i] = {
+        label: 'admin',
+        value: 'admin'
+      }
+    } else if (isArray(obj)) {
+      Arrydata[i] = {
+        label: Arrydata[i][0],
+        value: Arrydata[i][0]
+      }
+    } else {
+      for (var key in obj) {
+        var newKey = keyMap[key];
+        if (newKey) {
+          obj[newKey] = obj[key];
+          delete obj[key];
+        }
       }
     }
   }

@@ -24,7 +24,7 @@ const routes: Array<RouteRecordRaw> = [
       title: '首页',
       icon: renderIcon(CheckCircleOutlined),
       sort: 1,
-      perms: ['provider_home', 'project_home', 'operate_home']
+      perms: ['provider_home', 'project_home', 'operate_home', 'admin']
     },
     children: [
       {

@@ -13,7 +13,7 @@ const adminInfo = {
   desc: 'manager',
   password: Random.string('upper', 4, 16),
   token,
-  permissions: [
+  perms: [
     {
       label: '主控台',
       value: 'dashboard_console',

@@ -143,7 +143,6 @@
           username,
           password,
         };
-
         const { code, message: msg } = await userStore.login(params);
 
         if (code == ResultEnum.SUCCESS) {
@@ -151,7 +150,7 @@
           message.success('登录成功！');
           router.replace(toPath).then((_) => {
             if (route.name == 'login') {
-              router.replace('/');
+              router.replace('/homeStatic/request');
             }
           });
         } else {

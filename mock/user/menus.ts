@@ -2,38 +2,37 @@ import { resultSuccess } from '../_util';
 
 const menusList = [
   {
-    path: '/dashboard',
-    name: 'Dashboard',
+    path: '/homeStatic',
+    name: 'HomeStatic',
     component: 'LAYOUT',
-    redirect: '/dashboard/console',
+    redirect: '/homeStatic/request',
     meta: {
-      icon: 'DashboardOutlined',
-      title: 'Dashboard',
+      icon: 'CheckCircleOutlined',
+      title: '首页',
     },
     children: [
       {
-        path: 'console',
-        name: 'dashboard_console',
-        component: '/dashboard/console/console',
+        path: 'request',
+        name: 'homeStatic-request',
+        component: '/homeStatic/request/request',
         meta: {
-          title: '主控台',
+          title: '首页',
         },
       },
       {
-        path: 'monitor',
-        name: 'dashboard_monitor',
-        component: '/dashboard/monitor/monitor',
+        path: 'homeStatic',
+        name: 'homeStatic-suppliers',
+        component: '/homeStatic/suppliers/suppliers',
         meta: {
-          title: '监控页',
+          title: '首页',
         },
       },
       {
-        path: 'workplace',
-        name: 'dashboard_workplace',
-        component: '/dashboard/workplace/workplace',
+        path: 'operator',
+        name: 'homeStatic-operator',
+        component: '/homeStatic/operator/operator',
         meta: {
-          hidden: true,
-          title: '工作台',
+          title: '首页',
         },
       },
     ],

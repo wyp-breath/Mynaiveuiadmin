@@ -1,5 +1,5 @@
 import { NButton } from 'naive-ui';
-import { PermissionsEnum } from '@/enums/permissionsEnum';
+import { PermsEnum } from '@/enums/permsEnum';
 export interface ActionItem extends NButton.props {
   onClick?: Fn;
   label?: string;
@@ -9,7 +9,7 @@ export interface ActionItem extends NButton.props {
   disabled?: boolean;
   divider?: boolean;
   // 权限编码控制是否显示
-  auth?: PermissionsEnum | PermissionsEnum[] | string | string[];
+  auth?: PermsEnum | PermsEnum[] | string | string[];
   // 业务控制是否显示
   ifShow?: boolean | ((action: ActionItem) => boolean);
 }

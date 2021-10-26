@@ -30,7 +30,7 @@ export const routerGenerator = (routerMap, parent?): any[] => {
         ...item.meta,
         label: item.meta.title,
         icon: constantRouterIcon[item.meta.icon] || null,
-        permissions: item.meta.permissions || null,
+        perms: item.meta.perms || null,
       },
     };
 

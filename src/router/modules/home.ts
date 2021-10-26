@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from 'vue-router';
 import { Layout } from '@/router/constant';
-import { TableOutlined } from '@vicons/antd';
+import { CheckCircleOutlined } from '@vicons/antd';
 import { renderIcon } from '@/utils/index';
 
 /**
@@ -16,36 +16,28 @@ import { renderIcon } from '@/utils/index';
  * */
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/list',
-    name: 'List',
-    redirect: '/list/basic-list',
+    path: '/homeStatic',
+    name: 'homeStatic',
+    redirect: '/homeStatic/index',
     component: Layout,
     meta: {
-      title: '列表页面',
-      icon: renderIcon(TableOutlined),
-      sort: 2,
+      title: '首页',
+      icon: renderIcon(CheckCircleOutlined),
+      sort: 1,
+      perms: ['provider_home', 'project_home', 'operate_home']
     },
     children: [
       {
-        path: 'basic-list',
-        name: 'basic-list',
+        path: 'index',
+        name: 'homeStatic-index',
         meta: {
-          title: '基础列表',
+          title: '首页',
         },
-        component: () => import('@/views/list/basicList/index.vue'),
-      },
-      {
-        path: 'basic-info/:id?',
-        name: 'basic-info',
-        meta: {
-          title: '基础详情',
-          hidden: true,
-          activeMenu: 'basic-list',
-        },
-        component: () => import('@/views/list/basicList/info.vue'),
+        component: () => import('@/views/homeStatic/index.vue'),
       },
     ],
   },
 ];
 
 export default routes;
+

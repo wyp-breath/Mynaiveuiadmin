@@ -29,7 +29,7 @@
 - 新增 `顶部菜单` logo展示
 -（破坏性更新）
 - 优化 `动态路由配置` 取消`constantRouterComponents.ts`，中组件映射配置，更名为 `router-icons.ts`
-- 优化 `admin_info接口结构`，roles 更名为：permissions，roles.roleName，更名为：label
+- 优化 `admin_info接口结构`，roles 更名为：perms，roles.roleName，更名为：label
 - 优化 多级路由，当没有配置`redirect`时，默认为第一个子路由，配置则优先按配置
 - 依赖升级
 

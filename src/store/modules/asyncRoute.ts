@@ -88,12 +88,12 @@ export const useAsyncRouteStore = defineStore({
     },
     async generateRoutes(data) {
       let accessedRouters;
-      const permissionsList = data.permissions || [];
+      const permsList = data.perms || [];
       const routeFilter = (route) => {
         const { meta } = route;
-        const { permissions } = meta || {};
-        if (!permissions) return true;
-        return permissionsList.some((item) => permissions.includes(item.value));
+        const { perms } = meta || {};
+        if (!perms) return true;
+        return permsList.some((item) => perms.includes(item.value));
       };
       const { getPermissionMode } = useProjectSetting();
       const permissionMode = unref(getPermissionMode);

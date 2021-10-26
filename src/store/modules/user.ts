@@ -44,7 +44,7 @@ export const useUserStore = defineStore({
     getAvatar(): string {
       return this.avatar;
     },
-    getPermissions(): any[] {
+    getPerms(): any[] {
       return this.perms;
     },
     getCpmode(): number {
@@ -79,7 +79,7 @@ export const useUserStore = defineStore({
     setAvatar(avatar: string) {
       this.avatar = avatar;
     },
-    setPermissions(perms) {
+    setPerms(perms) {
       this.perms = perms;
     },
     setCpmode(cp_mode) {
@@ -125,32 +125,33 @@ export const useUserStore = defineStore({
 
     // 获取用户信息
     GetInfo() {
-      const that = this;
+      // const that = this;
       return new Promise((resolve, reject) => {
         getUserInfo()
           .then((res) => {
             const result = res;
             const ex = 7 * 24 * 60 * 60 * 1000;
             if (result.perms && result.perms.length) {
-              const permissionsList = result.perms;
-              that.setPermissions(permissionsList);
+              const permsList = changeKeys(result.perms);
+              this.setPerms(permsList);
               storage.set(CURRENT_USER, result, ex);
-              that.setUserInfo({
+              this.setUserInfo({
                 username: result.username,
                 name: result.name,
                 phone: result.phone,
               });
-              that.setAvatar(result.avatar);
-              that.setPermissions(result.perms);
-              that.setCpmode(result.cp_mode);
-              that.setDept(result.dept);
-              that.setDeptid(result.dept_id);
-              that.setId(result.id);
-              that.setParentDept(result.parent_depts);
-              that.setParentDeptid(result.parent_depts_ids);
-              that.setRoles(result.roles);
+              this.setAvatar(result.avatar);
+              this.setPerms(result.perms);
+              this.setCpmode(result.cp_mode);
+              this.setDept(result.dept);
+              this.setDeptid(result.dept_id);
+              this.setId(result.id);
+              this.setParentDept(result.parent_depts);
+              this.setParentDeptid(result.parent_depts_ids);
+              this.setRoles(result.roles);
+              storage.set('ROLES', result.roles);
             } else {
-              reject(new Error('getInfo: permissionsList must be a non-null array !'));
+              reject(new Error('getInfo: permsList must be a non-null array !'));
             }
             resolve(res);
           })
@@ -162,7 +163,7 @@ export const useUserStore = defineStore({
 
     // 登出
     async logout() {
-      this.setPermissions([]);
+      this.setPerms([]);
       this.setUserInfo('');
       storage.remove(ACCESS_TOKEN);
       storage.remove(CURRENT_USER);
@@ -175,3 +176,20 @@ export const useUserStore = defineStore({
 export function useUserStoreWidthOut() {
   return useUserStore(store);
 }
+function changeKeys(Arrydata: any) {
+  var keyMap = {
+    name: "label",
+    method: "value"
+  };
+  for (var i = 0; i < Arrydata.length; i++) {
+    var obj = Arrydata[i];
+    for (var key in obj) {
+      var newKey = keyMap[key];
+      if (newKey) {
+        obj[newKey] = obj[key];
+        delete obj[key];
+      }
+    }
+  }
+}
+

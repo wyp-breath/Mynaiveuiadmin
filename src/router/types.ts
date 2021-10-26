@@ -21,7 +21,7 @@ export interface Meta {
   title: string;
   // 是否忽略权限
   ignoreAuth?: boolean;
-  permissions?: string[];
+  perms?: string[];
   // 是否不缓存
   noKeepAlive?: boolean;
   // 是否固定在tab上
@@ -49,7 +49,7 @@ export interface Menu {
   fullPath?: string;
   icon?: any;
   path: string;
-  permissions?: string[];
+  perms?: string[];
   redirect?: string;
   sort?: number;
 }

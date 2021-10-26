@@ -22,6 +22,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Layout,
     meta: {
       title: '异常页面',
+      hidden: true,
       icon: renderIcon(ExclamationCircleOutlined),
       sort: 3,
     },

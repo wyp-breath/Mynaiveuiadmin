@@ -14,17 +14,18 @@ const whitePathList = [LOGIN_PATH]; // no redirect whitelist
 export function createRouterGuards(router: Router) {
   const userStore = useUserStoreWidthOut();
   const asyncRouteStore = useAsyncRouteStoreWidthOut();
+  console.log(router)
   router.beforeEach(async (to, from, next) => {
     const Loading = window['$loading'] || null;
     Loading && Loading.start();
     if (from.path === LOGIN_PATH && to.name === 'errorPage') {
-      console.log(from);
       next(PageEnum.BASE_HOME);
       return;
     }
 
     // Whitelist can be directly entered
     if (whitePathList.includes(to.path as PageEnum)) {
+      console.log(whitePathList)
       next();
       return;
     }
@@ -32,12 +33,12 @@ export function createRouterGuards(router: Router) {
     const token = storage.get(ACCESS_TOKEN);
 
     if (!token) {
-      // You can access without permissions. You need to set the routing meta.ignoreAuth to true
+      // You can access without perms. You need to set the routing meta.ignoreAuth to true
       if (to.meta.ignoreAuth) {
         next();
         return;
       }
-      // redirect login page 重定向到登录页面
+      // redirect login page
       const redirectData: { path: string; replace: boolean; query?: Recordable<string> } = {
         path: LOGIN_PATH,
         replace: true,
@@ -81,7 +82,6 @@ export function createRouterGuards(router: Router) {
   });
 
   router.afterEach((to, _, failure) => {
-    console.log(to);
     document.title = (to?.meta?.title as string) || document.title;
     if (isNavigationFailure(failure)) {
       //console.log('failed navigation', failure)

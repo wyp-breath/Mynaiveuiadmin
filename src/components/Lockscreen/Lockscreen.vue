@@ -44,7 +44,7 @@
             <user-outlined />
           </n-icon>
         </n-avatar>
-        <div class="username">{{ loginParams.username }}</div>
+        <div class="username">{{ username }}</div>
         <n-input
           type="password"
           autofocus
@@ -119,15 +119,17 @@
       const { battery, batteryStatus, calcDischargingTime, calcChargingTime } = useBattery();
       const userInfo: object = userStore.getUserInfo || {};
       const username = userInfo['username'] || '';
+      const phone = userInfo['phone'] || '';
       const state = reactive({
         showLogin: false,
         loginLoading: false, // 正在登录
         isLoginError: false, //密码错误
         errorMsg: '密码错误',
         loginParams: {
-          username: username || '',
+          username: phone || '',
           password: '',
         },
+        username: username
       });
 
       // 解锁登录
